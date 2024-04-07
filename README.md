@@ -7,5 +7,5 @@ Este repositorio contiene una colección de códigos de práctica de programaci�
 El repositorio está organizado por semestres
 
  - Semestre 1: C++ básico (Sintaxis, funciones)
- - Semestre 2: C++ intermedio (Clases, Herencia, Estructura de Datos)
+ - Semestre 2: C++ intermedio (Clases, Herencia, Punteros, Estructura de Datos)
  - Semestre 3: Java (Estructura de datos y Algoritmos)
