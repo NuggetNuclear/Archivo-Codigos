@@ -7,19 +7,11 @@ public class Lab_1 {
         int m = 0, n = 0;
 
         do {
-            System.out.println("Ingrese dos numeros separados por un espacio:");
-            String entrada = scanner.nextLine();
+            System.out.println("Ingrese dos numeros separados por un espacio: ");
+            m = scanner.nextInt();
+            n = scanner.nextInt();
 
-            String[] numeros = entrada.split(" ");
-
-            System.out.println("Numeros ingresados: " + numeros[0] + " " + numeros[1]);
-
-            if (numeros.length != 2) {
-                System.out.println("Error");
-            } else {
-                m = Integer.parseInt(numeros[0]);
-                n = Integer.parseInt(numeros[1]);
-            }
+            System.out.println("Numeros ingresados: " + m + " " + n);
 
         } while (m < 0 || m > 10000 || n < 0 || n > 10000);
 
@@ -38,8 +30,33 @@ public class Lab_1 {
             System.out.println(Arrays.toString(matriz[i]));
         }
 
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+            }
+        }
 
+        System.out.println("Ingrese las filas para formar los pares: ");
+        int f1 = scanner.nextInt();
+        int f2 = scanner.nextInt();
+
+
+        if (f1 + 1 >= m || f2 + 1 >= m) {
+            System.out.println("No existe una fila despues alguna de las filas");
+        } else {
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    System.out.print("{" + matriz[f1][i] + "," + matriz[f2][j] + "}");
+                }
+            }
+            System.out.println(" ");
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    System.out.print("{" + matriz[f2][i] + "," + matriz[f1][j] + "}");
+                }
+            }
+        }
 
         scanner.close();
+
     }
 }
