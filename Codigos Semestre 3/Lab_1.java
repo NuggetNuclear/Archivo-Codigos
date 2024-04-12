@@ -19,8 +19,12 @@ public class Lab_1 {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                System.out.println("Ingrese el valor perteneciente a " + "[" + i + "][" + j + "]");
-                matriz[i][j] = scanner.nextInt();
+                int valorrr;
+                do {
+                    System.out.println("Ingrese el valor perteneciente a " + "[" + i + "][" + j + "]");
+                    valorrr = scanner.nextInt();
+                } while (valorrr < 0 || valorrr > Math.pow(10, 8));
+                matriz[i][j] = valorrr;
             }
         }
 
@@ -30,28 +34,24 @@ public class Lab_1 {
             System.out.println(Arrays.toString(matriz[i]));
         }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-            }
-        }
 
-        System.out.println("Ingrese las filas para formar los pares: ");
-        int f1 = scanner.nextInt();
-        int f2 = scanner.nextInt();
+        System.out.println("Ingrese las filas para formar los pares (1-" + m + ") y (1-" + n + "): " );
 
+        int f1 = scanner.nextInt() - 1;
+        int f2 = scanner.nextInt() - 1;
 
-        if (f1 + 1 >= m || f2 + 1 >= m) {
-            System.out.println("No existe una fila despues alguna de las filas");
+        if (f1 >= m || f2 >= m) {
+            System.out.println("Ingrese un numero valido");
         } else {
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.print("{" + matriz[f1][i] + "," + matriz[f2][j] + "}");
+                    System.out.print("{" + matriz[f1][i] + "," + matriz[f2][j] + "} ");
                 }
             }
             System.out.println(" ");
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.print("{" + matriz[f2][i] + "," + matriz[f1][j] + "}");
+                    System.out.print("{" + matriz[f2][i] + "," + matriz[f1][j] + "} ");
                 }
             }
         }
