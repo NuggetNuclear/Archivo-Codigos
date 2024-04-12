@@ -55,8 +55,6 @@ public class Lab_1 {
                 }
             }
         }
-
         scanner.close();
-
     }
 }
