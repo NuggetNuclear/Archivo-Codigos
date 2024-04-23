@@ -4,7 +4,7 @@ Este repositorio contiene una colección de códigos de práctica de programaci�
 
 ## Estructura del Repositorio
 
-El repositorio está organizado por semestres
+El repositorio está organizado por semestres, el material está desordenado.
 
  - Semestre 1: C++ básico (Sintaxis, funciones)
  - Semestre 2: C++ intermedio (Clases, Herencia, Punteros, Estructura de datos)
