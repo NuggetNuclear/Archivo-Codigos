@@ -3,7 +3,7 @@ import java.util.ListIterator;
 
 public class LinkedListIterative {
     public static void reverseIterative(LinkedList<Integer> list) {
-        if (list == null || list.isEmpty() || list.size() == 1) {
+        if (list == null || list.isEmpty() || list.size() == 1) { // Si la lista está vacía
             return;
         }
 
@@ -14,9 +14,11 @@ public class LinkedListIterative {
         int halfSize = list.size() / 2;
         for (int i = 0; i < halfSize; i++) {
             // Intercambiamos los elementos de los extremos
-            Integer temp = forwardIterator.next();
-            forwardIterator.set(backwardIterator.previous());
-            backwardIterator.set(temp);
+            System.out.println("Intercambiando elementos en las posiciones " + (i+1) + " y " + (list.size() - i));
+            Integer temp = forwardIterator.next();                      // Obtenemos el elemento en la posición i
+            forwardIterator.set(backwardIterator.previous());           // Reemplazamos el elemento en la posición i por el de la posición n-i
+            backwardIterator.set(temp);                                 // Reemplazamos el elemento en la posición n-i por el de la posición i
+            System.out.println("Elementos intercambiados: " + list);
         }
     }
 
@@ -26,6 +28,10 @@ public class LinkedListIterative {
         list.add(2);
         list.add(3);
         list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        list.add(8);
         System.out.println("Lista original:");
         System.out.println(list);
         reverseIterative(list);
