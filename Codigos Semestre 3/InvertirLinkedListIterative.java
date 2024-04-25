@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class LinkedListIterative {
+public class InvertirLinkedListIterative {
     public static void reverseIterative(LinkedList<Integer> list) {
         if (list == null || list.isEmpty() || list.size() == 1) { // Si la lista está vacía
             return;

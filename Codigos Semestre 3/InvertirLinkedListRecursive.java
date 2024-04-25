@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-public class LinkedListRecursive {
+public class InvertirLinkedListRecursive {
     public static void reverseRecursive(LinkedList<Integer> list) {
         if (list == null || list.isEmpty() || list.size() == 1) { // Si la lista está vacía o tiene 1 elemento
             return;
