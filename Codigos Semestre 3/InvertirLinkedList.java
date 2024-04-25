@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Queue;
 
-public class ReverseLinkedList {
+public class InvertirLinkedList {
     public static void invert(LinkedList<Integer> Lista) {
         Queue<Integer> Cola = new LinkedList<>();
 
