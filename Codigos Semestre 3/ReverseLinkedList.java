@@ -26,10 +26,10 @@ public class ReverseLinkedList {
 
         input.close(); // Cierra el scanner
 
-        System.out.println(Lista.toString());
+        System.out.println(Lista);
 
         invert(Lista); // Llama a la función e invierte la lista
 
-        System.out.println(Lista.toString());
+        System.out.println(Lista);
     }
 }
