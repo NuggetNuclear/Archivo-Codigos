@@ -1,7 +1,7 @@
 import java.util.Stack;
 import java.util.Scanner;
 
-public class Control_2 {
+public class CierreString {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese la cadena de caracteres: ");
