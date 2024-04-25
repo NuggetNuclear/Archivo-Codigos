@@ -3,7 +3,6 @@ class LinkedList {
         int value;
         Node next;
     }
-
     Node Head;
 }    
 
