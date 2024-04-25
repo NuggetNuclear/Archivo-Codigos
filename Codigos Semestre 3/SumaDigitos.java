@@ -52,17 +52,16 @@ public class SumaDigitos {
             current1 = current1.next;
             current2 = current2.next;
         }
-
-        for (int i = 0; i < getSize(result.head); i++) {
+        
+        for (int i = 0; i < getSize(result.head) - 2; i++) {
             LinkedList.Node current = result.head;
 
-            while (current.next != null) {
-                if (current.data >= 10) {
-                    current.data -= 10;
-                    current.next.data += 1;
-                }
-                current = current.next;
+            if (current.data >= 10) {
+                current.data -= 10;
+                current.next.data += 1;
             }
+            current = current.next;
+
         }
         return result.head;
     }
