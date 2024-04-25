@@ -1,7 +1,6 @@
 import java.lang.IllegalStateException;
 import java.util.ArrayList;
 
-
 public class StacksArrays {
 
     public class Stack<T> {
