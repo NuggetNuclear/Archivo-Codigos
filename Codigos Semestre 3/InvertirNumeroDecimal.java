@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+// Al introducir un decimal el codigo nunca saldrá del bucle, este código apareció en un control
+
 public class InvertirNumeroDecimal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
