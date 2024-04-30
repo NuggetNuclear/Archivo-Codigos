@@ -1,32 +1,35 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Stack;
+import java.util.Queue;
+
 
 public class Spotify {
-    public static class Song {
+    public static class Cancion {
         private
 
-        String name;
-        String artist;
+        String nombre;
+        String artista;
         String album;
-        int duration;
+        int duracion;
 
         public
 
-        Song(String name, String artist, String album, int duration)
+        Cancion(String nombre, String artista, String album, int duracion)
         {
-            this.name = name;
-            this.artist = artist;
+            this.nombre = nombre;
+            this.artista = artista;
             this.album = album;
-            this.duration = duration;
+            this.duracion = duracion;
         }
 
-        String getName()
+        String getNombre()
         {
-            return name;
+            return nombre;
         }
 
-        String getArtist()
+        String getArtista()
         {
-            return artist;
+            return artista;
         }
 
         String getAlbum()
@@ -34,31 +37,89 @@ public class Spotify {
             return album;
         }
 
-        int getDuration()
+        int getDuracion()
         {
-            return duration;
+            return duracion;
         }
 
         void getData()
         {
-            System.out.println("Nombre: " + name + " | Artista: " + artist + " | Album: " + album + " | Duración: " + (float)duration/60 + " minutos");
+            System.out.println("Nombre: " + getNombre() + " | artistaa: " + getArtista() + " | Album: " + getAlbum() + " | Duración: " + (float)getDuracion()/60 + " minutos");
         }
     }
 
+    public static class Playlist {
+        private
+        
+        String nombre;
+        java.util.LinkedList <Cancion> Cancions = new java.util.LinkedList<>();
+        Cancion[] PlaylistArray = new Cancion[10];
+        int espacioDisponible, currentIndex;
+
+        public
+
+        Playlist(String nombre)
+        {
+            this.nombre = nombre;
+
+            espacioDisponible = 10;
+            currentIndex = 0;
+
+            for(int i = 0; i < 10; i++)
+            {
+                PlaylistArray = null;
+            }
+        }
+
+        String getNombre()
+        {
+            return nombre;
+        }
+
+        void addtoPlaylist(Cancion cancion)
+        {
+            Cancions.addLast(cancion);
+        }
+
+        void addtoPlaylistArray(Cancion cancion)
+        {
+            if(espacioDisponible > 1)
+            {
+                PlaylistArray[currentIndex] = cancion;
+                currentIndex++;
+                espacioDisponible--;
+            } else {
+
+                Queue<Cancion> canciones = new LinkedList<>(); // Crea una nueva cola de canciones
+
+                for(int i = 0; i < PlaylistArray.length - 1; i++) // Copia el arreglo a la cola
+                {
+                    canciones.add(PlaylistArray[i]);
+                }
+
+                int newSize = (PlaylistArray.length) + 10; // Calcula el nuevo tamaño del arreglo
+
+                espacioDisponible = newSize - PlaylistArray.length; // Calcula el nuevo espacio disponible
+
+                Cancion[] PlaylistArray = new Cancion[newSize]; // Crea el arreglo nuevo, sobreescribiendo el anterior
+                
+                for(int i = 0; i < newSize; i++) // Inicializa el nuevo arreglo en null
+                {
+                    PlaylistArray = null;
+                }
+
+                for(int i = 0; !canciones.isEmpty(); i++) // Copia los datos de la cola al arreglo nuevo
+                {                    
+                    PlaylistArray[i] = canciones.poll();
+                }
+
+                PlaylistArray[currentIndex] = cancion;
+                currentIndex++;
+            }
+        }
+
+
+    }
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Nombre: "); 
-        String name = input.nextLine();
-        System.out.println("Artista: "); 
-        String artist = input.nextLine();
-        System.out.println("Album: "); 
-        String album = input.nextLine();
-        System.out.println("Duración (en segundos): "); 
-        int duration = input.nextInt();
-
-        Song Cancion1 = new Song(name, artist, album, duration);
-
-        Cancion1.getData();
-        input.close();
     }
 }
