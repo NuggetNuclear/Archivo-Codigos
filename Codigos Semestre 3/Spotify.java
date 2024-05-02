@@ -48,7 +48,7 @@ public class Spotify {
         java.util.LinkedList<Cancion> Canciones = new java.util.LinkedList<>();
         Cancion[] PlaylistArray = new Cancion[10];
         int espacioDisponible, currentIndex;
-        boolean isolatedSpace;
+        boolean espacioLiberado;
 
         public
 
@@ -74,11 +74,11 @@ public class Spotify {
         }
 
         void addtoPlaylistArray(Cancion cancion) {
-            if (isolatedSpace) {
+            if (espacioLiberado) {
 
                 PlaylistArray[currentIndex] = cancion;
                 currentIndex++;
-                isolatedSpace = false;
+                espacioLiberado = false;
 
             } else if (espacioDisponible > 1) {
 
@@ -132,7 +132,7 @@ public class Spotify {
                 if (cancion == PlaylistArray[i]) {
 
                     PlaylistArray[i] = null;
-                    isolatedSpace = true;
+                    espacioLiberado = true;
 
                 } else {
 
