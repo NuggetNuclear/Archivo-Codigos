@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Spotify {
     public static class Cancion {
         private
@@ -42,7 +39,7 @@ public class Spotify {
             System.out.println("Duracion: " + (int) duracion / 60 + ":" + duracion % 60);
         }
 
-        boolean comparar(Cancion cancion) {
+        boolean equals(Cancion cancion) {
             if (cancion.getNombre() != nombre) {
                 return false;
             } else if (cancion.getArtista() != artista) {
@@ -61,73 +58,103 @@ public class Spotify {
         private
 
         java.util.LinkedList<Cancion> Canciones = new java.util.LinkedList<>();
-        Cancion[] PlaylistArray = new Cancion[10];
-        int espacioDisponible, currentIndex;
+        Cancion[] PlaylistArray0 = new Cancion[10];
+        Cancion[] PlaylistArray1 = new Cancion[1];
+        int espacioDisponible, currentIndex, arregloenUso;
         String nombre;
 
         public
 
-        Playlist(String nombre) {
+        Playlist(String nombre) { // Constructor de la clase Playlist (asigna el nombre y inicializa las demás
+                                  // variables)
             this.nombre = nombre;
             espacioDisponible = 10;
             currentIndex = 0;
+            arregloenUso = 0;
         }
 
         String getNombre() {
             return nombre;
         }
 
-        void getInformacion() { // Recorre la lista de canciones y muestra la información de cada una
-            System.out.println("\nNombre: " + nombre + "\n");
-            System.out.println("Canciones: ");
+        void getInformacion() { // Recorre la playlist (Linked List) y muestra la información de cada canción.
+            System.out.println("Nombre de la playlist: " + nombre + "\nCanciones: ");
             for (Cancion cancion : Canciones) {
                 cancion.getInformacion();
             }
         }
 
+        void getInformacionArray() { // Recorre la playlist (Arreglo) y muestra la información de cada canción.
+            System.out.println("Nombre de la playlist: " + nombre + "\nCanciones: ");
+            if (arregloenUso == 0) {
+                for (int i = 0; i < PlaylistArray0.length; i++) {
+                    if (PlaylistArray0[i] != null) {
+                        PlaylistArray0[i].getInformacion();
+                    }
+                }
+            } else if (arregloenUso == 1) {
+                for (int i = 0; i < PlaylistArray1.length; i++) {
+                    if (PlaylistArray1[i] != null) {
+                        PlaylistArray1[i].getInformacion();
+                    }
+                }
+            }
+        }
+
         void addtoPlaylist(Cancion cancion) {
             Canciones.addLast(cancion);
-            ;
-
             // Para despues: Añadir una forma de sincronizar las listas
         }
 
         void addtoPlaylistArray(Cancion cancion) {
             if (espacioDisponible > 0) {
 
-                PlaylistArray[currentIndex] = cancion;
-                System.out.println("Añadido a la posición (" + currentIndex + ") del arreglo");
-                currentIndex++;
-                espacioDisponible--;
-                System.out.println("Espacio disponible al salir: " + espacioDisponible);
+                // Si hay espacio disponible en el arreglo en uso, añado la cancion al arreglo y
+                // actualizo las variables (indice y espacio disponible)
+
+                if (arregloenUso == 0) {
+                    PlaylistArray0[currentIndex] = cancion;
+                    currentIndex++;
+                    espacioDisponible--;
+                } else if (arregloenUso == 1) {
+                    PlaylistArray1[currentIndex] = cancion;
+                    currentIndex++;
+                    espacioDisponible--;
+                }
 
             } else {
-                System.out.println("\nArreglo lleno, creando uno nuevo\n");
-                Queue<Cancion> canciones = new LinkedList<>();
 
-                for (int i = 0; i < PlaylistArray.length; i++) { // 0 a 9
-                    canciones.add(PlaylistArray[i]);
-                    System.out
-                            .println("Tamaño del arreglo: " + PlaylistArray.length + " Copiando canción N°: " + i + " a la cola | currentIndex: " + currentIndex);
+                // Si no hay espacio en el arreglo actual, aumento el tamaño del otro arreglo
+                // (x1.5) y copio las canciones.
+
+                if (arregloenUso == 0) {
+
+                    PlaylistArray1 = new Cancion[(int) (PlaylistArray0.length * 1.5)];
+
+                    System.arraycopy(PlaylistArray0, 0, PlaylistArray1, 0, PlaylistArray0.length);
+                    // Arraycopy es un poco más eficiente que un for, por lo que uso eso para copiar
+                    // las canciones, es parte de la librería estandar de java
+
+                    espacioDisponible = PlaylistArray1.length - currentIndex - 1;
+                    arregloenUso = 1;
+
+                    PlaylistArray1[currentIndex] = cancion;
+
+                } else if (arregloenUso == 1) {
+
+                    PlaylistArray0 = new Cancion[(int) (PlaylistArray1.length * 1.5)];
+
+                    System.arraycopy(PlaylistArray1, 0, PlaylistArray0, 0, PlaylistArray1.length);
+
+                    espacioDisponible = PlaylistArray0.length - currentIndex - 1;
+                    arregloenUso = 0;
+
+                    PlaylistArray0[currentIndex] = cancion;
                 }
-
-                int newSize = (PlaylistArray.length) + 10;
-
-                espacioDisponible = newSize - currentIndex - 1;
-
-                PlaylistArray = new Cancion[newSize];
-
-                for (int i = 0; !canciones.isEmpty(); i++) {
-                    PlaylistArray[i] = canciones.poll();
-                }
-
-                PlaylistArray[currentIndex] = cancion;
-                System.out.println("Añadido a la posición (" + currentIndex + ") del arreglo, espacio disponible: " + espacioDisponible + "\n");
-
-                currentIndex++; // Actualiza el indice del próximo espacio vacío
             }
 
             // Para despues: Añadir una forma de sincronizar las listas
+
         }
 
         void removefromPlaylist(Cancion cancion) {
@@ -138,13 +165,29 @@ public class Spotify {
 
         void removefromPlaylistArray(Cancion cancion) {
 
-            for (int i = 0; i < currentIndex; i++) {
-
-                if (PlaylistArray[i].equals(cancion)) {
-
-                    PlaylistArray[i] = null;
-                    break;
-
+            if (arregloenUso == 0) {
+                for (int i = 0; i < PlaylistArray0.length; i++) {
+                    if (PlaylistArray0[i].equals(cancion) && i != PlaylistArray0.length - 1) {
+                        PlaylistArray0[i] = PlaylistArray0[currentIndex - 1];
+                        currentIndex--;
+                        espacioDisponible++;
+                    } else {
+                        PlaylistArray0[i] = null;
+                        currentIndex--;
+                        espacioDisponible++;
+                    }
+                }
+            } else if (arregloenUso == 1) {
+                for (int i = 0; i < PlaylistArray1.length; i++) {
+                    if (PlaylistArray1[i].equals(cancion) && i != PlaylistArray1.length - 1) {
+                        PlaylistArray1[i] = PlaylistArray1[currentIndex - 1];
+                        currentIndex--;
+                        espacioDisponible++;
+                    } else {
+                        PlaylistArray1[i] = null;
+                        currentIndex--;
+                        espacioDisponible++;
+                    }
                 }
             }
         }
@@ -152,90 +195,35 @@ public class Spotify {
 
     public static void main(String[] args) {
 
-        Cancion cancion1 = new Cancion("Cancion1", "Artista1", "Album1", 180);
-        Cancion cancion2 = new Cancion("Cancion2", "Artista2", "Album2", 200);
-        Cancion cancion3 = new Cancion("Cancion3", "Artista3", "Album3", 220);
-        Cancion cancion4 = new Cancion("Cancion4", "Artista4", "Album4", 240);
+        Cancion cancion1 = new Cancion("Cancion", "Artista", "Album", 184);
 
         Playlist playlist1 = new Playlist("Playlist1");
-
-        playlist1.addtoPlaylist(cancion1);
-        playlist1.addtoPlaylist(cancion2);
-        playlist1.addtoPlaylist(cancion3);
-        playlist1.addtoPlaylist(cancion4);
-
         Playlist playlist2 = new Playlist("Playlist2");
 
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
-        playlist2.addtoPlaylistArray(cancion1);
-        playlist2.addtoPlaylistArray(cancion2);
-        playlist2.addtoPlaylistArray(cancion3);
-        playlist2.addtoPlaylistArray(cancion4);
+        for (int i = 0; i < 100000; i++) {
 
-        playlist1.getInformacion();
+            playlist1.addtoPlaylistArray(cancion1);
+            System.out.println(i);
+        }
 
-        playlist1.removefromPlaylist(cancion2);
+        System.out.println("Playlist 1 creada con 100,000 canciones");
 
-        playlist1.getInformacion();
+        // 5,482 segundos en añadir 100,000 canciones (un cout por cada cancion)
+        // 227 milisegundos en añadir 100,000 canciones (sin cout)
+
+        for (int i = 0; i < 100000; i++) {
+
+            playlist2.addtoPlaylist(cancion1);
+            System.out.println(i);
+        }
+
+        System.out.println("Playlist 1 creada con 100,000 canciones");
+
+        // 5,595 segundos en añadir 100,000 canciones (un cout por cada cancion)
+        // 163 milisegundos en añadir 100,000 canciones (sin cout)
+
+        // 10,086 segundos en añadir 100,000 canciones a cada Playlist (un cout por cada
+        // cancion)
 
     }
 }
